@@ -1,9 +1,14 @@
-const {Operation} = require("../models")
+const {Operation, User} = require("../models")
 
 module.exports=
-    async function (_req, res, _next) {
+    async function (req, res, _next) {
+      let {id} = req.query
         try {
-          let result = await Operation.findAll()
+          let result = await Operation.findAll({
+            where:{
+               UserId: id
+              }
+          })
           res.status(200).json(result);    
         } catch (error) {
           console.error(error.message)
