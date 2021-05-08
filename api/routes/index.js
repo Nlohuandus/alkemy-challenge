@@ -1,30 +1,18 @@
 var express = require("express");
 var router = express.Router();
-const {Operaciones} = require("../models")
+const {Operation} = require("../models")
 
-/* GET home page. */
-router.get("/operations", async function (_req, res, _next) {
-  try {
-    let result = await Operaciones.findAll()
-    res.status(200).json(result);    
-  } catch (error) {
-    console.log(error.message)
-  }
-});
+const GetOperations = require("./GetOperations");
+const CreateOperation = require("./CreateOperation");
+const Register = require("./Register")
 
-router.post("/create", async function(req, res) {
-  try {
-    let {concepto, monto, tipo} = req.body
-    let newOperation = await Operaciones.create({
-      concepto: concepto,
-      monto: monto,
-      tipo: tipo
-    })
-    res.status(201).json(newOperation)
-    
-  } catch (error) {
-    console.log(error.message)
-  }
-})
+/* GET all operations */
+router.get("/operations", GetOperations);
+
+//create a new operation
+router.post("/create_operation", CreateOperation )
+
+//register user
+router.post("/register", Register )
 
 module.exports = router;

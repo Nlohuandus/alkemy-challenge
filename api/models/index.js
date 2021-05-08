@@ -1,24 +1,41 @@
-const {Sequelize, DataTypes} = require("sequelize");
+const { Sequelize, DataTypes } = require("sequelize");
 
 const db = new Sequelize("postgres://postgres:47267986@localhost:5432/alkemy", {
+  logging: false,
 });
 
-const Operaciones = db.define("operaciones",{
-  concepto:{
+const Operation = db.define("Operation", {
+  concept: {
     type: DataTypes.STRING,
     allownull: false,
   },
-  monto:{
+  amount: {
     type: DataTypes.FLOAT,
-    allowNull:false
+    allowNull: false,
   },
-  tipo:{
-    type: DataTypes.ENUM("ingreso", "egreso")
-  }
-})
+  type: {
+    type: DataTypes.ENUM("inflow", "outflow"),
+  },
+},{freezeTableName: true});
 
+const User = db.define(
+  "User",
+  {
+    email: {
+      type: DataTypes.STRING,
+      unique: true,
+    },
+    username: {
+      type: DataTypes.STRING,
+    },
+    password: {
+      type: DataTypes.STRING,
+    },
+  },
+  { timestamps: false, freezeTableName: true }
+);
 
-//relaciones aca 
-//operaciones.belongsToMany(user)
+User.hasMany(Operation)
+Operation.belongsTo(User)
 
-module.exports = {db, Operaciones}
+module.exports = { db, Operation, User };
