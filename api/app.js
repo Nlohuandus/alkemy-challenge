@@ -7,7 +7,7 @@ var indexRouter = require("./routes/index");
 const {db} = require("./models")
 const cors = require("cors")
 
-db.sync({force:true}).then(function (){
+db.sync({force:false}).then(function (){
   console.log("server is listening")
   
 })

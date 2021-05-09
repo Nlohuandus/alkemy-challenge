@@ -11,13 +11,13 @@ module.exports = async function (req, res) {
       password: passwordEncrypted,
     };
     await User.create(newUser);
-    res.status(201).json(newUser);
+    res.status(201).redirect("http://localhost:3000/login");
   } catch (error) {
     if (
       error.message ===
       "llave duplicada viola restricción de unicidad «User_email_key»"
     ) {
-      res.status(302).json({ result: "User already exist" });
+      res.status(302).redirect("http://localhost:3000/login?exist=true");
     } else {
       console.error(error.message);
     }

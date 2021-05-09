@@ -17,7 +17,7 @@ module.exports = async function (req, res) {
       process.env.TOKEN_SECRET
     );
     if (valid) { 
-      res.json({ accessToken: accessToken });
+      res.redirect(`http://localhost:3000/redir?accessToken=${accessToken}&userId=${user.id}`);
     } else {
       res.json({ message: "Invalid Credentials" });
     }
