@@ -4,6 +4,7 @@ import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
+import NavBar from "../Components/NavBar"
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -32,11 +33,32 @@ const Login = () => {
     e.preventDefault();
     setForm({ ...form, [e.target.name]: e.target.value });
   };
+  const submitHandler = (e) => {
+    e.preventDefault();
+    fetch("http://localhost:8000/login", {
+      method: "post",
+      body: JSON.stringify(form),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then(response => {if(response.accessToken){
+        localStorage.setItem("token", `${response.accessToken}`)
+        localStorage.setItem("userId", `${response.userId}`)
+        window.location.assign("http://localhost:3000/")
+      }else if(response.message){
+        alert("Invalid user data")
+      }})
+      .catch((error) => console.error("error", error));
+  };
   return (
+    <div>
+      <NavBar/>
     <Container maxWidth="xs" className={classes.container}>
       Login
-      <Grid spacing={2}>
-        <form action="http://localhost:8000/login" method="POST">
+      <Grid >
+        <form onSubmit={submitHandler}>
           <Grid item xs={12}>
             <TextField
               fullWidth
@@ -65,12 +87,16 @@ const Login = () => {
           </Grid>
           <Grid item xs={12}>
             <Button type="submit" value="submit" className={classes.submit}>
-              Submit
+              Login
+            </Button>
+            <Button onClick={() => window.location.assign("http://localhost:3000/register")} className={classes.submit}>
+              Register
             </Button>
           </Grid>
         </form>
       </Grid>
     </Container>
+    </div>
   );
 };
 export default Login;

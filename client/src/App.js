@@ -1,13 +1,12 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 import Register from "./Components/Register";
-import { createMuiTheme } from '@material-ui/core/styles';
-import { ThemeProvider } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/cssbaseline'
-import 'fontsource-roboto';
+import { createMuiTheme } from "@material-ui/core/styles";
+import { ThemeProvider } from "@material-ui/core/styles";
+import CssBaseline from "@material-ui/core/cssbaseline";
+import "fontsource-roboto";
 import Login from "./Components/Login";
-import Redir from "./Components/Redir";
-
+import Home from "./Components/Home"
 
 const theme = createMuiTheme({
   overrides: {
@@ -16,8 +15,8 @@ const theme = createMuiTheme({
         html: {
           WebkitFontSmoothing: "auto",
         },
-        body:{
-          backgroundColor:"#2F3E46"
+        body: {
+          backgroundColor: "#2F3E46",
         },
       },
     },
@@ -25,27 +24,29 @@ const theme = createMuiTheme({
 });
 
 function App() {
-  if(!localStorage.toke){
+  if (!localStorage.token) {
     return (
-        <ThemeProvider theme={theme}>
-    <CssBaseline />
-    <Switch>
-        <Route exact path="/register" component={Register} />
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/redir" component={Redir}/>
-    </Switch>
-    </ThemeProvider>
-        )
-      }else{
-        <ThemeProvider theme={theme}>
+      <ThemeProvider theme={theme}>
         <CssBaseline />
         <Switch>
-            <Route exact path="/register" component={Register} />
-            <Route exact path="/login" component={Login} />
-            <Route exact path="/redir" component={Redir}/>
+        <Route exact path="/" component={Home} />
+          <Route exact path="/register" component={Register} />
+          <Route exact path="/login" component={Login} />
         </Switch>
-        </ThemeProvider>
-      }
+      </ThemeProvider>
+    );
+  } else {
+    return (
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Switch>
+        <Route exact path="/" component={Home} />
+          <Route exact path="/register" component={Register} />
+          <Route exact path="/login" component={Login} />
+        </Switch>
+      </ThemeProvider>
+    );
+  }
 }
 
 export default App;

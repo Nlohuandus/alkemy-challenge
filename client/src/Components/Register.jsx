@@ -4,7 +4,7 @@ import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
-
+import NavBar from "./NavBar"
 const useStyles = makeStyles((theme) => ({
   container: {
     display: "flex",
@@ -33,11 +33,30 @@ const Register = () => {
     e.preventDefault();
     setForm({ ...form, [e.target.name]: e.target.value });
   };
+  const submitHandler = (e) => {
+    e.preventDefault();
+    fetch("http://localhost:8000/register", {
+      method: "post",
+      body: JSON.stringify(form),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then(response => {if(response.id){
+        window.location.assign("http://localhost:3000/login")
+      }else if (response.existence){
+        alert("User already exist")
+      }})
+      .catch((error) => console.error("error", error));
+  };
   return (
+    <div>
+      <NavBar/>
     <Container maxWidth="xs" className={classes.container}>
       Register
-      <Grid spacing={2}>
-        <form action="http://localhost:8000/register" method="POST">
+      <Grid>
+        <form onSubmit={submitHandler}>
           <Grid container item xs={12}>
             <TextField
               fullWidth
@@ -81,12 +100,13 @@ const Register = () => {
           </Grid>
           <Grid item xs={12}>
             <Button type="submit" value="submit" className={classes.submit}>
-              Submit
+              Register
             </Button>
           </Grid>
         </form>
       </Grid>
     </Container>
+    </div>
   );
 };
 export default Register;
