@@ -11,6 +11,6 @@ module.exports=
           })
           res.status(200).json(result);    
         } catch (error) {
-          console.error(error.message)
+          console.error(error)
         }
       }

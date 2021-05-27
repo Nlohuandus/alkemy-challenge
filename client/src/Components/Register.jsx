@@ -13,11 +13,14 @@ const useStyles = makeStyles((theme) => ({
     padding: "2rem",
     fontSize: "2rem",
     marginTop: "7rem",
+    boxShadow:"black 0px 2px 4px -1px"
   },
   inputs: {
     background: "#CAD2C5",
     padding: "0.5rem",
     borderRadius: "1px",
+    boxShadow:"black 0px 2px 4px -1px"
+
   },
 }));
 

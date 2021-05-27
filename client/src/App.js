@@ -6,7 +6,8 @@ import { ThemeProvider } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/cssbaseline";
 import "fontsource-roboto";
 import Login from "./Components/Login";
-import Home from "./Components/Home"
+import Home from "./Components/Home";
+import HomeUnreg from "./Components/HomeUnreg";
 
 const theme = createMuiTheme({
   overrides: {
@@ -29,7 +30,7 @@ function App() {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Switch>
-        <Route exact path="/" component={Home} />
+          <Route exact path="/" component={HomeUnreg}/>
           <Route exact path="/register" component={Register} />
           <Route exact path="/login" component={Login} />
         </Switch>
@@ -40,9 +41,7 @@ function App() {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Switch>
-        <Route exact path="/" component={Home} />
-          <Route exact path="/register" component={Register} />
-          <Route exact path="/login" component={Login} />
+          <Route exact path="/" component={Home} />
         </Switch>
       </ThemeProvider>
     );
